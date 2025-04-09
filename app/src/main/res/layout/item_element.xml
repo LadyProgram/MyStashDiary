@@ -4,20 +4,54 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:padding="20dp">
 
-    <CheckBox
-        android:id="@+id/doneCheckBox"
+    <FrameLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/nameTextView"
-        android:layout_width="0dp"
+        <ImageView
+            android:id="@+id/iconImageView"
+            android:layout_width="10dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_circle" />
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:textStyle="bold"
-        tools:text="Palabras Radiantes"/>
+        android:orientation="vertical"
+        android:layout_marginLeft="10dp">
+
+        <TextView
+            android:id="@+id/nameTextView"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textStyle="bold"
+            android:textSize="18dp"
+            tools:text="Palabras Radiantes"/>
+
+        <TextView
+            android:id="@+id/creatorTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:textSize="12sp"
+            android:text="Creador"/>
+
+    </LinearLayout>
+
+
+    <Button
+        android:id="@+id/deleteButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="?attr/materialIconButtonStyle"
+        app:icon="@drawable/ic_delete"/>
 
 
 </LinearLayout>

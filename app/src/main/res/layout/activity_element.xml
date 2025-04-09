@@ -28,7 +28,7 @@
         android:layout_marginTop="32dp"/>
 
     <EditText
-        android:id="@+id/titleEditText"
+        android:id="@+id/creatorEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
