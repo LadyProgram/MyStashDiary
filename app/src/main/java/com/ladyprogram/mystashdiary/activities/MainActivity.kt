@@ -2,9 +2,11 @@ package com.ladyprogram.mystashdiary.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,6 +16,9 @@ import com.ladyprogram.mystashdiary.data.Category
 import com.ladyprogram.mystashdiary.data.Element
 import com.ladyprogram.mystashdiary.data.ElementDAO
 import com.ladyprogram.mystashdiary.databinding.ActivityMainBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
@@ -72,6 +77,8 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(this, ElementActivity::class.java)
         intent.putExtra(ElementActivity.TASK_ID,element.id)
         startActivity(intent)
+
+        supportActionBar?.title = "My Stash Diary"
     }
 
     fun deleteElement(position: Int) {
@@ -88,7 +95,74 @@ class MainActivity : AppCompatActivity() {
             .setCancelable(false) //Si se pulsa fuera del diálogo no se cierra el mensaje
             .show()
     }
-}
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_activity_main, menu)
+
+        val menuItem = menu?.findItem(R.id.menu_search)
+        val searchView = menuItem?.actionView as SearchView
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                //Log.i("MENU", "He pulsado Enter")
+                return false
+            }
+
+
+            override fun onQueryTextChange(s: String): Boolean {
+                //Log.i("MENU", s)
+
+                elementList = elementDAO.findAllByNameOrCreator(s)
+                adapter.updateItems(elementList)
+                return true
+            }
+        })
+
+        return true
+    }
+
+        /* override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+             menuInflater.inflate(R.menu.menu_activity_main, menu)
+
+             val menuItem = menu?.findItem(R.id.menu_search)
+             val searchView = menuItem?.actionView as SearchView
+
+             searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                 override fun onQueryTextSubmit(query: String): Boolean {
+                     //Log.i("MENU", "He pulsado Enter")
+                     searchElementByName(query)
+                     return false
+                 }
+
+
+                 override fun onQueryTextChange(s: String): Boolean {
+                     //Log.i("MENU", s)
+                     return true
+                 }
+             })
+
+             return true
+
+         }
+
+         fun searchElementByName(query: String) {
+             CoroutineScope(Dispatchers.IO).launch {
+                 try {
+                     var name = elementLi
+                     val result = Element(query)
+
+                     elementList = result.results
+
+                     CoroutineScope(Dispatchers.Main).launch {
+                         adapter.items = elementList
+                         adapter.notifyDataSetChanged()
+
+                     }
+                 } catch (e: Exception) {
+                     e.printStackTrace()
+                 }
+
+     }*/
 
 
         
@@ -100,4 +174,4 @@ class MainActivity : AppCompatActivity() {
         // Ejemplo para transformar enums
         val categoryNumber = 0
         val category = Category.entries[categoryNumber]
-        val newCategoryNumber = category.ordinal
+        val newCategoryNumber = category.ordinal}

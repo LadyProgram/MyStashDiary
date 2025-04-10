@@ -1,5 +1,10 @@
 package com.ladyprogram.mystashdiary.data
 
+
+class ElementResponse (
+    val results: List<Element>
+)
+
 class Element (
     var id: Long,
     var name: String,

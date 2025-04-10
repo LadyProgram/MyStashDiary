@@ -46,7 +46,7 @@ class ElementActivity : AppCompatActivity() {
             binding.creatorEditText.setText(element.creator)
         } else {
             element = Element(-1L, "","")
-            supportActionBar?.title = "Crear tarea"
+            supportActionBar?.title = "Crear elemento"
         }
 
         binding.saveButton.setOnClickListener {
