@@ -43,6 +43,7 @@ class ElementActivity : AppCompatActivity() {
         if (id != -1L) {
             element = elementDAO.findById(id)!!
             binding.nameEditText.setText(element.name)
+            binding.creatorEditText.setText(element.creator)
         } else {
             element = Element(-1L, "","")
             supportActionBar?.title = "Crear tarea"
@@ -50,8 +51,10 @@ class ElementActivity : AppCompatActivity() {
 
         binding.saveButton.setOnClickListener {
             val name = binding.nameEditText.text.toString()
+            val creator = binding.creatorEditText.text.toString()
 
             element.name = name
+            element.creator = creator
 
             if (element.id != -1L) {
                 elementDAO.update(element)

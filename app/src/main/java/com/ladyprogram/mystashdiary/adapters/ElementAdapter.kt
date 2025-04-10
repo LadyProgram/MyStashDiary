@@ -42,6 +42,7 @@ class ElementViewHolder(val binding: ItemElementBinding) : ViewHolder(binding.ro
     fun render(element: Element) {
         
             binding.nameTextView.text = element.name
-      
+            binding.creatorTextView.text = element.creator
+
     }
 }
