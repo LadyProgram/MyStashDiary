@@ -9,8 +9,8 @@ class Element (
     var id: Long,
     var name: String,
     var creator: String,
-    /*val category: Int,
-    var state: Int,
+    var category: Category,
+    /*var state: Int,
     var note: String,
     var dateConsumed: Long? = null,
     var calification: Int? = null,
@@ -23,7 +23,7 @@ class Element (
         const val COLUMN_NAME_ID = "id"
         const val COLUMN_NAME_NAME = "name"
         const val COLUMN_NAME_CREATOR = "creator"
-        //const val COLUMN_NAME_CATEGORY = "category"
+        const val COLUMN_NAME_CATEGORY = "category"
         //const val COLUMN_NAME_STATE = "state"
     }
 }

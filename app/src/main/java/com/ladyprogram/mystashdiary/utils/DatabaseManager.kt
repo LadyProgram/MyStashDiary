@@ -16,7 +16,8 @@ class DatabaseManager (context: Context) : SQLiteOpenHelper(context, DATABASE_NA
             "CREATE TABLE ${Element.TABLE_NAME} (" +
                     "${Element.COLUMN_NAME_ID} INTEGER PRIMARY KEY AUTOINCREMENT," +
                     "${Element.COLUMN_NAME_NAME} TEXT," +
-                    "${Element.COLUMN_NAME_CREATOR} TEXT)"
+                    "${Element.COLUMN_NAME_CREATOR} TEXT," +
+                    "${Element.COLUMN_NAME_CATEGORY} INTEGER)"
 
         private const val SQL_DROP_TABLE_TASK = "DROP TABLE IF EXISTS ${Element.TABLE_NAME}"
 

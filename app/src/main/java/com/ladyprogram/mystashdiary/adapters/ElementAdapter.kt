@@ -40,9 +40,12 @@ class ElementAdapter(
 class ElementViewHolder(val binding: ItemElementBinding) : ViewHolder(binding.root) {
 
     fun render(element: Element) {
+        val context = itemView.context
         
-            binding.nameTextView.text = element.name
-            binding.creatorTextView.text = element.creator
+        binding.nameTextView.text = element.name
+        binding.creatorTextView.text = element.creator
+        binding.iconImageView.setImageResource(element.category.icon)
+        binding.iconImageView.setColorFilter(context.getColor(element.category.color))
 
     }
 }

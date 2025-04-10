@@ -3,6 +3,7 @@ package com.ladyprogram.mystashdiary.data
 import android.content.ContentValues
 import android.content.Context
 import android.util.Log
+import com.ladyprogram.mystashdiary.activities.categoryNumber
 import com.ladyprogram.mystashdiary.utils.DatabaseManager
 
 class ElementDAO  (context: Context) {
@@ -18,7 +19,7 @@ class ElementDAO  (context: Context) {
         val values = ContentValues().apply {
             put(Element.COLUMN_NAME_NAME, element.name)
             put(Element.COLUMN_NAME_CREATOR, element.creator)
-
+            put(Element.COLUMN_NAME_CATEGORY, element.category.ordinal)
         }
 
         try {
@@ -41,6 +42,7 @@ class ElementDAO  (context: Context) {
         val values = ContentValues().apply {
             put(Element.COLUMN_NAME_NAME, element.name)
             put(Element.COLUMN_NAME_CREATOR, element.creator)
+            put(Element.COLUMN_NAME_CATEGORY, element.category.ordinal)
         }
 
         try {
@@ -74,7 +76,8 @@ class ElementDAO  (context: Context) {
         val projection = arrayOf(
             Element.COLUMN_NAME_ID,
             Element.COLUMN_NAME_NAME,
-            Element.COLUMN_NAME_CREATOR
+            Element.COLUMN_NAME_CREATOR,
+            Element.COLUMN_NAME_CATEGORY
         )
 
         val selection = "${Element.COLUMN_NAME_ID} = $id"
@@ -96,7 +99,8 @@ class ElementDAO  (context: Context) {
                 val id = cursor.getLong(cursor.getColumnIndexOrThrow(Element.COLUMN_NAME_ID))
                 val name = cursor.getString(cursor.getColumnIndexOrThrow(Element.COLUMN_NAME_NAME))
                 val creator = cursor.getString(cursor.getColumnIndexOrThrow(Element.COLUMN_NAME_CREATOR))
-                element = Element(id, name, creator)
+                val category = cursor.getInt(cursor.getColumnIndexOrThrow(Element.COLUMN_NAME_CATEGORY))
+                element = Element(id, name, creator, Category.entries[category])
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -113,7 +117,8 @@ class ElementDAO  (context: Context) {
         val projection = arrayOf(
             Element.COLUMN_NAME_ID,
             Element.COLUMN_NAME_NAME,
-            Element.COLUMN_NAME_CREATOR
+            Element.COLUMN_NAME_CREATOR,
+            Element.COLUMN_NAME_CATEGORY
         )
 
         var elementList: MutableList<Element> = mutableListOf()
@@ -133,7 +138,8 @@ class ElementDAO  (context: Context) {
                 val id = cursor.getLong(cursor.getColumnIndexOrThrow(Element.COLUMN_NAME_ID))
                 val name = cursor.getString(cursor.getColumnIndexOrThrow(Element.COLUMN_NAME_NAME))
                 val creator = cursor.getString(cursor.getColumnIndexOrThrow(Element.COLUMN_NAME_CREATOR))
-                val element = Element(id, name, creator)
+                val category = cursor.getInt(cursor.getColumnIndexOrThrow(Element.COLUMN_NAME_CATEGORY))
+                val element = Element(id, name, creator, Category.entries[category])
 
                 elementList.add(element)
             }
@@ -152,7 +158,8 @@ class ElementDAO  (context: Context) {
         val projection = arrayOf(
             Element.COLUMN_NAME_ID,
             Element.COLUMN_NAME_NAME,
-            Element.COLUMN_NAME_CREATOR
+            Element.COLUMN_NAME_CREATOR,
+            Element.COLUMN_NAME_CATEGORY
         )
 
         var elementList: MutableList<Element> = mutableListOf()
@@ -174,7 +181,8 @@ class ElementDAO  (context: Context) {
                 val id = cursor.getLong(cursor.getColumnIndexOrThrow(Element.COLUMN_NAME_ID))
                 val name = cursor.getString(cursor.getColumnIndexOrThrow(Element.COLUMN_NAME_NAME))
                 val creator = cursor.getString(cursor.getColumnIndexOrThrow(Element.COLUMN_NAME_CREATOR))
-                val element = Element(id, name, creator)
+                val category = cursor.getInt(cursor.getColumnIndexOrThrow(Element.COLUMN_NAME_CATEGORY))
+                val element = Element(id, name, creator, Category.entries[category])
 
                 elementList.add(element)
             }

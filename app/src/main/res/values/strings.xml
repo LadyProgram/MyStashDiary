@@ -10,6 +10,13 @@
     <string name="menu_search">Search </string>
     <string name="element_name">Name: </string>
     <string name="element_creator">Creator: </string>
+    <string name="element_category">Category: </string>
+    <string name="element_category_select">Select a category</string>
     <string name="element_save_button">Save </string>
+
+    <string name="category_book">Book</string>
+    <string name="category_movie">Movie</string>
+    <string name="category_series">Series</string>
+    <string name="category_anime">Anime</string>
 
 </resources>

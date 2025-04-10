@@ -13,8 +13,8 @@
 
         <ImageView
             android:id="@+id/iconImageView"
-            android:layout_width="10dp"
-            android:layout_height="wrap_content"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
             android:layout_gravity="center"
             android:src="@drawable/ic_circle" />
 
