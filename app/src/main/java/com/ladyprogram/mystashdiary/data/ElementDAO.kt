@@ -123,6 +123,9 @@ class ElementDAO  (context: Context) {
 
         var elementList: MutableList<Element> = mutableListOf()
 
+        //val  alphabeticOrder = "SELECT * FROM ${Element.TABLE_NAME} ORDER BY ${Element.COLUMN_NAME_NAME}"
+
+
         try {
             val cursor = db.query(
                 Element.TABLE_NAME,  // The table to query
@@ -131,7 +134,7 @@ class ElementDAO  (context: Context) {
                 null,          // The values for the WHERE clause
                 null,                   // don't group the rows
                 null,                   // don't filter by row groups
-                null               // The sort order
+                "${Element.COLUMN_NAME_NAME} COLLATE NOCASE ASC"               // The sort order
             )
 
             while (cursor.moveToNext()) {
@@ -174,7 +177,7 @@ class ElementDAO  (context: Context) {
                 null,          // The values for the WHERE clause
                 null,                   // don't group the rows
                 null,                   // don't filter by row groups
-                null               // The sort order
+                "${Element.COLUMN_NAME_NAME} COLLATE NOCASE ASC"               // The sort order
             )
 
             while (cursor.moveToNext()) {
