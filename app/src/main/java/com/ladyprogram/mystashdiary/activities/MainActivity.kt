@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var elementDAO: ElementDAO
     lateinit var elementList: List<Element>
     lateinit var adapter: ElementAdapter
-    
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        
+
         //setContentView(R.layout.activity_main) RECORDAR BORRAR ESTE CÓDIGO CUANDO USAMOS BINDING
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -49,13 +49,13 @@ class MainActivity : AppCompatActivity() {
 
         //elementList = elementDAO.findAll()
 
-        adapter = ElementAdapter(emptyList(),::editElement, ::deleteElement)
+        adapter = ElementAdapter(emptyList(), ::editElement, ::deleteElement)
 
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
 
-        binding.addElementButton.setOnClickListener{
-            val intent = Intent(this,ElementActivity::class.java)
+        binding.addElementButton.setOnClickListener {
+            val intent = Intent(this, ElementActivity::class.java)
             startActivity(intent)
         }
     }
@@ -69,13 +69,13 @@ class MainActivity : AppCompatActivity() {
         elementList = elementDAO.findAll()
         adapter.updateItems(elementList)
     }
-    
+
 
     fun editElement(position: Int) {
         val element = elementList[position]
 
         val intent = Intent(this, ElementActivity::class.java)
-        intent.putExtra(ElementActivity.TASK_ID,element.id)
+        intent.putExtra(ElementActivity.TASK_ID, element.id)
         startActivity(intent)
 
         supportActionBar?.title = "My Stash Diary"
@@ -85,8 +85,8 @@ class MainActivity : AppCompatActivity() {
         val element = elementList[position]
 
         AlertDialog.Builder(this)
-            .setTitle("Delete element")
-            .setMessage("Are you sure you want to delete this element?")
+            .setTitle(R.string.delete_element)
+            .setMessage(R.string.delete_message)
             .setPositiveButton(android.R.string.ok) { _, _ ->
                 elementDAO.delete(element)
                 refreshData()
@@ -120,51 +120,7 @@ class MainActivity : AppCompatActivity() {
 
         return true
     }
-
-        /* override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-             menuInflater.inflate(R.menu.menu_activity_main, menu)
-
-             val menuItem = menu?.findItem(R.id.menu_search)
-             val searchView = menuItem?.actionView as SearchView
-
-             searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-                 override fun onQueryTextSubmit(query: String): Boolean {
-                     //Log.i("MENU", "He pulsado Enter")
-                     searchElementByName(query)
-                     return false
-                 }
-
-
-                 override fun onQueryTextChange(s: String): Boolean {
-                     //Log.i("MENU", s)
-                     return true
-                 }
-             })
-
-             return true
-
-         }
-
-         fun searchElementByName(query: String) {
-             CoroutineScope(Dispatchers.IO).launch {
-                 try {
-                     var name = elementLi
-                     val result = Element(query)
-
-                     elementList = result.results
-
-                     CoroutineScope(Dispatchers.Main).launch {
-                         adapter.items = elementList
-                         adapter.notifyDataSetChanged()
-
-                     }
-                 } catch (e: Exception) {
-                     e.printStackTrace()
-                 }
-
-     }*/
-
-
+}
         
         
         
@@ -174,4 +130,4 @@ class MainActivity : AppCompatActivity() {
         // Ejemplo para transformar enums
         val categoryNumber = 0
         val category = Category.entries[categoryNumber]
-        val newCategoryNumber = category.ordinal}
+        val newCategoryNumber = category.ordinal

@@ -18,7 +18,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Name:"/>
+            android:text="@string/element_name"/>
 
         <EditText
             android:id="@+id/nameEditText"
@@ -28,7 +28,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Creator:"
+            android:text="@string/element_creator"
             android:layout_marginTop="32dp"/>
 
         <EditText
@@ -40,7 +40,7 @@
             android:id="@+id/saveButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Save"
+            android:text="@string/element_save_button"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="32dp"/>
 
