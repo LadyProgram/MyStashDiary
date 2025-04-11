@@ -20,6 +20,7 @@ class ElementDAO  (context: Context) {
             put(Element.COLUMN_NAME_NAME, element.name)
             put(Element.COLUMN_NAME_CREATOR, element.creator)
             put(Element.COLUMN_NAME_CATEGORY, element.category.ordinal)
+            put(Element.COLUMN_NAME_STATE, element.state.ordinal)
         }
 
         try {
@@ -43,6 +44,7 @@ class ElementDAO  (context: Context) {
             put(Element.COLUMN_NAME_NAME, element.name)
             put(Element.COLUMN_NAME_CREATOR, element.creator)
             put(Element.COLUMN_NAME_CATEGORY, element.category.ordinal)
+            put(Element.COLUMN_NAME_STATE, element.state.ordinal)
         }
 
         try {
@@ -77,7 +79,8 @@ class ElementDAO  (context: Context) {
             Element.COLUMN_NAME_ID,
             Element.COLUMN_NAME_NAME,
             Element.COLUMN_NAME_CREATOR,
-            Element.COLUMN_NAME_CATEGORY
+            Element.COLUMN_NAME_CATEGORY,
+            Element.COLUMN_NAME_STATE
         )
 
         val selection = "${Element.COLUMN_NAME_ID} = $id"
@@ -100,7 +103,8 @@ class ElementDAO  (context: Context) {
                 val name = cursor.getString(cursor.getColumnIndexOrThrow(Element.COLUMN_NAME_NAME))
                 val creator = cursor.getString(cursor.getColumnIndexOrThrow(Element.COLUMN_NAME_CREATOR))
                 val category = cursor.getInt(cursor.getColumnIndexOrThrow(Element.COLUMN_NAME_CATEGORY))
-                element = Element(id, name, creator, Category.entries[category])
+                val state = cursor.getInt(cursor.getColumnIndexOrThrow(Element.COLUMN_NAME_STATE))
+                element = Element(id, name, creator, Category.entries[category], State.entries[state])
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -118,7 +122,8 @@ class ElementDAO  (context: Context) {
             Element.COLUMN_NAME_ID,
             Element.COLUMN_NAME_NAME,
             Element.COLUMN_NAME_CREATOR,
-            Element.COLUMN_NAME_CATEGORY
+            Element.COLUMN_NAME_CATEGORY,
+            Element.COLUMN_NAME_STATE
         )
 
         var elementList: MutableList<Element> = mutableListOf()
@@ -142,7 +147,8 @@ class ElementDAO  (context: Context) {
                 val name = cursor.getString(cursor.getColumnIndexOrThrow(Element.COLUMN_NAME_NAME))
                 val creator = cursor.getString(cursor.getColumnIndexOrThrow(Element.COLUMN_NAME_CREATOR))
                 val category = cursor.getInt(cursor.getColumnIndexOrThrow(Element.COLUMN_NAME_CATEGORY))
-                val element = Element(id, name, creator, Category.entries[category])
+                val state = cursor.getInt(cursor.getColumnIndexOrThrow(Element.COLUMN_NAME_STATE))
+                val element = Element(id, name, creator, Category.entries[category], State.entries[state])
 
                 elementList.add(element)
             }
@@ -162,7 +168,8 @@ class ElementDAO  (context: Context) {
             Element.COLUMN_NAME_ID,
             Element.COLUMN_NAME_NAME,
             Element.COLUMN_NAME_CREATOR,
-            Element.COLUMN_NAME_CATEGORY
+            Element.COLUMN_NAME_CATEGORY,
+            Element.COLUMN_NAME_STATE
         )
 
         var elementList: MutableList<Element> = mutableListOf()
@@ -185,8 +192,8 @@ class ElementDAO  (context: Context) {
                 val name = cursor.getString(cursor.getColumnIndexOrThrow(Element.COLUMN_NAME_NAME))
                 val creator = cursor.getString(cursor.getColumnIndexOrThrow(Element.COLUMN_NAME_CREATOR))
                 val category = cursor.getInt(cursor.getColumnIndexOrThrow(Element.COLUMN_NAME_CATEGORY))
-                val element = Element(id, name, creator, Category.entries[category])
-
+                val state = cursor.getInt(cursor.getColumnIndexOrThrow(Element.COLUMN_NAME_STATE))
+                val element = Element(id, name, creator, Category.entries[category], State.entries[state])
                 elementList.add(element)
             }
         } catch (e: Exception) {

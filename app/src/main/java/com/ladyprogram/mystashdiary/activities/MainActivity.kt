@@ -15,10 +15,8 @@ import com.ladyprogram.mystashdiary.adapters.ElementAdapter
 import com.ladyprogram.mystashdiary.data.Category
 import com.ladyprogram.mystashdiary.data.Element
 import com.ladyprogram.mystashdiary.data.ElementDAO
+import com.ladyprogram.mystashdiary.data.State
 import com.ladyprogram.mystashdiary.databinding.ActivityMainBinding
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
@@ -75,7 +73,7 @@ class MainActivity : AppCompatActivity() {
         val element = elementList[position]
 
         val intent = Intent(this, ElementActivity::class.java)
-        intent.putExtra(ElementActivity.TASK_ID, element.id)
+        intent.putExtra(ElementActivity.ELEMENT_ID, element.id)
         startActivity(intent)
 
         supportActionBar?.title = "My Stash Diary"
@@ -120,6 +118,41 @@ class MainActivity : AppCompatActivity() {
 
         return true
     }
+
+   /* @Composable
+    fun Tab(
+        selected: Boolean,
+        onClick: () -> Unit,
+        modifier: Modifier = Modifier,
+        enabled: Boolean = true,
+        text: (@Composable () -> Unit)? = null,
+        icon: (@Composable () -> Unit)? = null,
+        selectedContentColor: Color = LocalContentColor.current,
+        unselectedContentColor: Color = selectedContentColor,
+        interactionSource: MutableInteractionSource? = null
+    ): Unit
+
+    Tab(selected, onClick) {
+        Column(
+            Modifier.padding(10.dp).height(50.dp).fillMaxWidth(),
+            verticalArrangement = Arrangement.SpaceBetween
+        ) {
+            Box(
+                Modifier.size(10.dp)
+                    .align(Alignment.CenterHorizontally)
+                    .background(
+                        color =
+                        if (selected) MaterialTheme.colorScheme.primary
+                        else MaterialTheme.colorScheme.background
+                    )
+            )
+            Text(
+                text = title,
+                style = MaterialTheme.typography.bodyLarge,
+                modifier = Modifier.align(Alignment.CenterHorizontally)
+            )
+        }
+    }*/
 }
         
         
@@ -131,3 +164,6 @@ class MainActivity : AppCompatActivity() {
         val categoryNumber = 0
         val category = Category.entries[categoryNumber]
         val newCategoryNumber = category.ordinal
+
+        val stateNumber = 0
+        val state = State.entries[stateNumber]

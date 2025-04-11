@@ -17,9 +17,10 @@ class DatabaseManager (context: Context) : SQLiteOpenHelper(context, DATABASE_NA
                     "${Element.COLUMN_NAME_ID} INTEGER PRIMARY KEY AUTOINCREMENT," +
                     "${Element.COLUMN_NAME_NAME} TEXT," +
                     "${Element.COLUMN_NAME_CREATOR} TEXT," +
-                    "${Element.COLUMN_NAME_CATEGORY} INTEGER)"
+                    "${Element.COLUMN_NAME_CATEGORY} INTEGER," +
+                    "${Element.COLUMN_NAME_STATE} INTEGER)"
 
-        private const val SQL_DROP_TABLE_TASK = "DROP TABLE IF EXISTS ${Element.TABLE_NAME}"
+        private const val SQL_DROP_TABLE_ELEMENT = "DROP TABLE IF EXISTS ${Element.TABLE_NAME}"
 
     }
 
@@ -34,6 +35,6 @@ class DatabaseManager (context: Context) : SQLiteOpenHelper(context, DATABASE_NA
     }
 
     private fun onDestroy(db: SQLiteDatabase) {
-        db.execSQL(SQL_DROP_TABLE_TASK)
+        db.execSQL(SQL_DROP_TABLE_ELEMENT)
     }
 }

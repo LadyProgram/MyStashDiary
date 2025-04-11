@@ -10,13 +10,14 @@ import com.ladyprogram.mystashdiary.R
 import com.ladyprogram.mystashdiary.data.Category
 import com.ladyprogram.mystashdiary.data.Element
 import com.ladyprogram.mystashdiary.data.ElementDAO
+import com.ladyprogram.mystashdiary.data.State
 import com.ladyprogram.mystashdiary.databinding.ActivityElementBinding
 
 
 class ElementActivity : AppCompatActivity() {
 
     companion object {
-        const val TASK_ID = "TASK_ID"
+        const val ELEMENT_ID = "ELEMENT_ID"
     }
 
     lateinit var binding: ActivityElementBinding
@@ -46,9 +47,18 @@ class ElementActivity : AppCompatActivity() {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.categorySpinner.setAdapter(adapter)
 
+        // Create Spinner for State choices
+        val states = State.entries.map { getString(it.title) }.toMutableList().apply {
+            add(0, getString(R.string.element_state_select))
+        }
+        val adapterState = ArrayAdapter(this, android.R.layout.simple_list_item_1, states)
+        adapterState.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.stateSpinner.setAdapter(adapterState)
 
 
-       val id = intent.getLongExtra(TASK_ID, -1L)
+
+
+        val id = intent.getLongExtra(ELEMENT_ID, -1L)
         //val categoryId = intent.getLongExtra(CATEGORY_ID, -1L)
 
         elementDAO = ElementDAO(this)
@@ -58,8 +68,9 @@ class ElementActivity : AppCompatActivity() {
             binding.nameEditText.setText(element.name)
             binding.creatorEditText.setText(element.creator)
             binding.categorySpinner.setSelection(element.category.ordinal + 1)
+            binding.stateSpinner.setSelection(element.state.ordinal + 1)
         } else {
-            element = Element(-1L, "","", Category.BOOK)
+            element = Element(-1L, "","", Category.BOOK, State.PLANNING)
             supportActionBar?.title = "Crear elemento"
         }
 
@@ -67,15 +78,22 @@ class ElementActivity : AppCompatActivity() {
             val name = binding.nameEditText.text.toString()
             val creator = binding.creatorEditText.text.toString()
             val category = binding.categorySpinner.selectedItemPosition
+            val state = binding.stateSpinner.selectedItemPosition
 
             if (category == 0) {
                 // Selecciona una categoria
                 return@setOnClickListener
             }
 
+            if (state == 0) {
+                // Selecciona un estado, es decir te obliga a elegir una opción
+                return@setOnClickListener
+            }
+
             element.name = name
             element.creator = creator
             element.category = Category.entries[category - 1]
+            element.state = State.entries[state - 1]
 
             if (element.id != -1L) {
                 elementDAO.update(element)
