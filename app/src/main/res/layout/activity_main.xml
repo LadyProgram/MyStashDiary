@@ -7,14 +7,105 @@
     android:layout_height="match_parent"
     tools:context=".activities.MainActivity">
 
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tabGravity="start">
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/state_all" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/state_planning" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/state_consuming" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/state_completed" />
+
+    </com.google.android.material.tabs.TabLayout>
+
+    <HorizontalScrollView
+        android:id="@+id/categoryFiltersContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tabBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/categoryFiltersChipGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="8dp"
+            app:singleLine="true">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/filterCategoryBook"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Widget.Material3.Chip.Filter"
+                android:checked="true"
+                android:text="@string/category_book"
+                app:chipIcon="@drawable/ic_category_book"/>
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/filterCategoryMovie"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Widget.Material3.Chip.Filter"
+                android:checked="true"
+                android:text="@string/category_movie"
+                app:chipIcon="@drawable/ic_category_movie"/>
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/filterCategorySeries"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Widget.Material3.Chip.Filter"
+                android:checked="true"
+                android:text="@string/category_series"
+                app:chipIcon="@drawable/ic_category_series"/>
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/filterCategoryAnime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Widget.Material3.Chip.Filter"
+                android:checked="true"
+                android:text="@string/category_anime"
+                app:chipIcon="@drawable/ic_category_anime"/>
+
+        </com.google.android.material.chip.ChipGroup>
+    </HorizontalScrollView>
+
+    <com.google.android.material.divider.MaterialDivider
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/categoryFiltersContainer"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@id/categoryFiltersContainer"/>
 
 
 

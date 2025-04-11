@@ -205,6 +205,53 @@ class ElementDAO  (context: Context) {
         return elementList
     }
 
+    fun findAllByNameOrCreatorAndStatusAndCategories(query: String, state: State, categories: List<Category>): List<Element> {
+        val db = databaseManager.readableDatabase
+
+        val projection = arrayOf(
+            Element.COLUMN_NAME_ID,
+            Element.COLUMN_NAME_NAME,
+            Element.COLUMN_NAME_CREATOR,
+            Element.COLUMN_NAME_CATEGORY,
+            Element.COLUMN_NAME_STATE
+        )
+
+        var elementList: MutableList<Element> = mutableListOf()
+
+        val selection = "${Element.COLUMN_NAME_STATE} = ${state.ordinal} AND ${Element.COLUMN_NAME_CATEGORY} IN (${categories.map { it.ordinal }.joinToString(", ")})" +
+                " AND (${Element.COLUMN_NAME_NAME} LIKE '%$query%' OR ${Element.COLUMN_NAME_CREATOR} LIKE '%$query%')"
+
+        Log.d("FILTERS", selection)
+
+        try {
+            val cursor = db.query(
+                Element.TABLE_NAME,  // The table to query
+                projection,             // The array of columns to return (pass null to get all)
+                selection,              // The columns for the WHERE clause
+                null,          // The values for the WHERE clause
+                null,                   // don't group the rows
+                null,                   // don't filter by row groups
+                "${Element.COLUMN_NAME_NAME} COLLATE NOCASE ASC"               // The sort order
+            )
+
+            while (cursor.moveToNext()) {
+                val id = cursor.getLong(cursor.getColumnIndexOrThrow(Element.COLUMN_NAME_ID))
+                val name = cursor.getString(cursor.getColumnIndexOrThrow(Element.COLUMN_NAME_NAME))
+                val creator = cursor.getString(cursor.getColumnIndexOrThrow(Element.COLUMN_NAME_CREATOR))
+                val category = cursor.getInt(cursor.getColumnIndexOrThrow(Element.COLUMN_NAME_CATEGORY))
+                val state = cursor.getInt(cursor.getColumnIndexOrThrow(Element.COLUMN_NAME_STATE))
+                val element = Element(id, name, creator, Category.entries[category], State.entries[state])
+                elementList.add(element)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        } finally {
+            db.close()
+        }
+
+        return elementList
+    }
+
    /* fun findAllByCategory(category: Category): List<Element> {
         val db = databaseManager.readableDatabase
 

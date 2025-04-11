@@ -10,6 +10,8 @@ import androidx.appcompat.widget.SearchView
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.ladyprogram.mystashdiary.R
 import com.ladyprogram.mystashdiary.adapters.ElementAdapter
 import com.ladyprogram.mystashdiary.data.Category
@@ -25,6 +27,10 @@ class MainActivity : AppCompatActivity() {
     lateinit var elementDAO: ElementDAO
     lateinit var elementList: List<Element>
     lateinit var adapter: ElementAdapter
+
+    var filterQuery = ""
+    var filterState: State? = null
+    var filterCategories: List<Category> = Category.entries
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,6 +62,38 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, ElementActivity::class.java)
             startActivity(intent)
         }
+
+        binding.tabBar.addOnTabSelectedListener(object : OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab) {
+                when(tab.position) {
+                    0 -> filterState = null
+                    1-> filterState = State.PLANNING
+                    2 -> filterState = State.CONSUMING
+                    3 -> filterState = State.COMPLETED
+                }
+                refreshData()
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab) {}
+
+            override fun onTabReselected(tab: TabLayout.Tab) {}
+
+        })
+
+        // Seleccionamos el tab consumiendo nada mas entrar
+        //binding.tabBar.selectTab(binding.tabBar.getTabAt(2))
+
+        binding.categoryFiltersChipGroup.setOnCheckedStateChangeListener { _, checkedIds ->
+            filterCategories = checkedIds.map {
+                when(it) {
+                    R.id.filterCategoryBook -> Category.BOOK
+                    R.id.filterCategoryMovie -> Category.MOVIE
+                    R.id.filterCategorySeries -> Category.SERIES
+                    else -> Category.ANIME
+                }
+            }
+            refreshData()
+        }
     }
 
     override fun onResume() {
@@ -64,7 +102,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun refreshData() {
-        elementList = elementDAO.findAll()
+        if (filterState == null) {
+            elementList = elementDAO.findAllByNameOrCreator(filterQuery)
+        } else {
+            elementList = elementDAO.findAllByNameOrCreatorAndStatusAndCategories(filterQuery, filterState!!, filterCategories)
+        }
         adapter.updateItems(elementList)
     }
 
@@ -109,9 +151,8 @@ class MainActivity : AppCompatActivity() {
 
             override fun onQueryTextChange(s: String): Boolean {
                 //Log.i("MENU", s)
-
-                elementList = elementDAO.findAllByNameOrCreator(s)
-                adapter.updateItems(elementList)
+                filterQuery = s
+                refreshData()
                 return true
             }
         })
