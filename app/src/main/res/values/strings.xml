@@ -15,7 +15,7 @@
 
     <!-- Texto category -->
     <string name="element_category">Category: </string>
-    <string name="element_category_select">Select a category</string>
+    <string name="element_category_select">Select</string>
 
     <string name="category_book">Book</string>
     <string name="category_movie">Movie</string>
@@ -24,7 +24,7 @@
 
     <!-- Texto state -->
     <string name="element_state">State: </string>
-    <string name="element_state_select">Select a state</string>
+    <string name="element_state_select">Select</string>
 
     <string name="state_all">All</string>
     <string name="state_consuming">Consuming</string>
