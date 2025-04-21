@@ -3,7 +3,6 @@ package com.ladyprogram.mystashdiary.data
 import android.content.ContentValues
 import android.content.Context
 import android.util.Log
-import com.ladyprogram.mystashdiary.activities.categoryNumber
 import com.ladyprogram.mystashdiary.utils.DatabaseManager
 
 class ElementDAO  (context: Context) {
@@ -205,7 +204,7 @@ class ElementDAO  (context: Context) {
         return elementList
     }
 
-    fun findAllByNameOrCreatorAndStatusAndCategories(query: String, state: State, categories: List<Category>): List<Element> {
+    fun findAllByNameOrCreatorAndStatusAndCategories(query: String, states: List<State>, category: Category?): List<Element> {
         val db = databaseManager.readableDatabase
 
         val projection = arrayOf(
@@ -218,8 +217,13 @@ class ElementDAO  (context: Context) {
 
         var elementList: MutableList<Element> = mutableListOf()
 
-        val selection = "${Element.COLUMN_NAME_STATE} = ${state.ordinal} AND ${Element.COLUMN_NAME_CATEGORY} IN (${categories.map { it.ordinal }.joinToString(", ")})" +
-                " AND (${Element.COLUMN_NAME_NAME} LIKE '%$query%' OR ${Element.COLUMN_NAME_CREATOR} LIKE '%$query%')"
+        var selection = if (category != null) {
+            "${Element.COLUMN_NAME_CATEGORY} = ${category.ordinal} AND "
+        } else {
+            ""
+        }
+
+        selection += "${Element.COLUMN_NAME_STATE} IN (${states.map { it.ordinal }.joinToString(", ")}) AND (${Element.COLUMN_NAME_NAME} LIKE '%$query%' OR ${Element.COLUMN_NAME_CREATOR} LIKE '%$query%')"
 
         Log.d("FILTERS", selection)
 
@@ -238,9 +242,9 @@ class ElementDAO  (context: Context) {
                 val id = cursor.getLong(cursor.getColumnIndexOrThrow(Element.COLUMN_NAME_ID))
                 val name = cursor.getString(cursor.getColumnIndexOrThrow(Element.COLUMN_NAME_NAME))
                 val creator = cursor.getString(cursor.getColumnIndexOrThrow(Element.COLUMN_NAME_CREATOR))
-                val category = cursor.getInt(cursor.getColumnIndexOrThrow(Element.COLUMN_NAME_CATEGORY))
+                val categoryIndex = cursor.getInt(cursor.getColumnIndexOrThrow(Element.COLUMN_NAME_CATEGORY))
                 val state = cursor.getInt(cursor.getColumnIndexOrThrow(Element.COLUMN_NAME_STATE))
-                val element = Element(id, name, creator, Category.entries[category], State.entries[state])
+                val element = Element(id, name, creator, Category.entries[categoryIndex], State.entries[state])
                 elementList.add(element)
             }
         } catch (e: Exception) {

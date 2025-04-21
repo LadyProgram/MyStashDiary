@@ -24,17 +24,22 @@
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/state_planning" />
+            android:text="@string/category_book" />
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/state_consuming" />
+            android:text="@string/category_movie" />
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/state_completed" />
+            android:text="@string/category_series" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/category_anime" />
 
     </com.google.android.material.tabs.TabLayout>
 
@@ -45,6 +50,7 @@
         app:layout_constraintTop_toBottomOf="@id/tabBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
+
         <com.google.android.material.chip.ChipGroup
             android:id="@+id/categoryFiltersChipGroup"
             android:layout_width="wrap_content"
@@ -53,43 +59,36 @@
             app:singleLine="true">
 
             <com.google.android.material.chip.Chip
-                android:id="@+id/filterCategoryBook"
+                android:id="@+id/filterStateConsuming"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/Widget.Material3.Chip.Filter"
                 android:checked="true"
-                android:text="@string/category_book"
-                app:chipIcon="@drawable/ic_category_book"/>
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/filterCategoryMovie"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/Widget.Material3.Chip.Filter"
-                android:checked="true"
-                android:text="@string/category_movie"
+                android:text="@string/state_consuming"
                 app:chipIcon="@drawable/ic_category_movie"/>
 
             <com.google.android.material.chip.Chip
-                android:id="@+id/filterCategorySeries"
+                android:id="@+id/filterStateCompleted"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/Widget.Material3.Chip.Filter"
                 android:checked="true"
-                android:text="@string/category_series"
-                app:chipIcon="@drawable/ic_category_series"/>
+                android:text="@string/state_completed"
+                app:chipIcon="@drawable/ic_category_book"/>
 
             <com.google.android.material.chip.Chip
-                android:id="@+id/filterCategoryAnime"
+                android:id="@+id/filterStatePlanning"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/Widget.Material3.Chip.Filter"
                 android:checked="true"
-                android:text="@string/category_anime"
-                app:chipIcon="@drawable/ic_category_anime"/>
+                android:text="@string/state_planning"
+                app:chipIcon="@drawable/ic_category_series"/>
 
         </com.google.android.material.chip.ChipGroup>
     </HorizontalScrollView>
+
+
 
     <com.google.android.material.divider.MaterialDivider
         android:layout_width="match_parent"

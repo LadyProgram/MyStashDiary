@@ -29,8 +29,11 @@ class MainActivity : AppCompatActivity() {
     lateinit var adapter: ElementAdapter
 
     var filterQuery = ""
-    var filterState: State? = null
-    var filterCategories: List<Category> = Category.entries
+    //var filterState: State? = null
+    var filterCategory: Category? = null
+
+    //var filterCategories: List<Category> = Category.entries
+    var filterState: List<State> = State.entries
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -66,10 +69,11 @@ class MainActivity : AppCompatActivity() {
         binding.tabBar.addOnTabSelectedListener(object : OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 when(tab.position) {
-                    0 -> filterState = null
-                    1-> filterState = State.PLANNING
-                    2 -> filterState = State.CONSUMING
-                    3 -> filterState = State.COMPLETED
+                    0 -> filterCategory = null
+                    1-> filterCategory = Category.BOOK
+                    2 -> filterCategory = Category.MOVIE
+                    3 -> filterCategory = Category.SERIES
+                    4 -> filterCategory = Category.ANIME
                 }
                 refreshData()
             }
@@ -84,12 +88,11 @@ class MainActivity : AppCompatActivity() {
         //binding.tabBar.selectTab(binding.tabBar.getTabAt(2))
 
         binding.categoryFiltersChipGroup.setOnCheckedStateChangeListener { _, checkedIds ->
-            filterCategories = checkedIds.map {
+            filterState = checkedIds.map {
                 when(it) {
-                    R.id.filterCategoryBook -> Category.BOOK
-                    R.id.filterCategoryMovie -> Category.MOVIE
-                    R.id.filterCategorySeries -> Category.SERIES
-                    else -> Category.ANIME
+                    R.id.filterStatePlanning -> State.PLANNING
+                    R.id.filterStateConsuming -> State.CONSUMING
+                    else -> State.COMPLETED
                 }
             }
             refreshData()
@@ -102,11 +105,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun refreshData() {
-        if (filterState == null) {
-            elementList = elementDAO.findAllByNameOrCreator(filterQuery)
-        } else {
-            elementList = elementDAO.findAllByNameOrCreatorAndStatusAndCategories(filterQuery, filterState!!, filterCategories)
-        }
+        elementList = elementDAO.findAllByNameOrCreatorAndStatusAndCategories(filterQuery, filterState, filterCategory)
         adapter.updateItems(elementList)
     }
 
@@ -159,41 +158,6 @@ class MainActivity : AppCompatActivity() {
 
         return true
     }
-
-   /* @Composable
-    fun Tab(
-        selected: Boolean,
-        onClick: () -> Unit,
-        modifier: Modifier = Modifier,
-        enabled: Boolean = true,
-        text: (@Composable () -> Unit)? = null,
-        icon: (@Composable () -> Unit)? = null,
-        selectedContentColor: Color = LocalContentColor.current,
-        unselectedContentColor: Color = selectedContentColor,
-        interactionSource: MutableInteractionSource? = null
-    ): Unit
-
-    Tab(selected, onClick) {
-        Column(
-            Modifier.padding(10.dp).height(50.dp).fillMaxWidth(),
-            verticalArrangement = Arrangement.SpaceBetween
-        ) {
-            Box(
-                Modifier.size(10.dp)
-                    .align(Alignment.CenterHorizontally)
-                    .background(
-                        color =
-                        if (selected) MaterialTheme.colorScheme.primary
-                        else MaterialTheme.colorScheme.background
-                    )
-            )
-            Text(
-                text = title,
-                style = MaterialTheme.typography.bodyLarge,
-                modifier = Modifier.align(Alignment.CenterHorizontally)
-            )
-        }
-    }*/
 }
         
         
