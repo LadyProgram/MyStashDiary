@@ -12,6 +12,7 @@
     <string name="element_creator">Creator: </string>
 
     <string name="element_save_button">Save </string>
+    <string name="create_new_element">Create New Element </string>
 
     <!-- Texto category -->
     <string name="element_category">Category: </string>

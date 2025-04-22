@@ -71,7 +71,7 @@ class ElementActivity : AppCompatActivity() {
             binding.stateSpinner.setSelection(element.state.ordinal + 1)
         } else {
             element = Element(-1L, "","", Category.BOOK, State.PLANNING)
-            supportActionBar?.title = "Crear elemento"
+            supportActionBar?.title = R.string.create_new_element.toString()
         }
 
         binding.saveButton.setOnClickListener {

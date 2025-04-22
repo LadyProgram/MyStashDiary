@@ -8,7 +8,7 @@ class Element (
     var category: Category,
     var state: State,
     /*var note: String,
-    var dateConsumed: Long? = null,
+    var dateCompleted: Long? = null,
     var calification: Int? = null,
     var repetition: Int? = null*/
 ) {
